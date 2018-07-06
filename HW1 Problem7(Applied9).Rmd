@@ -1,0 +1,138 @@
+---
+title: "HW1 Problem7(Applied9)"
+author: "Guihong Wan"
+date: "7/3/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Explore the Data
+USArrests contains statistics, in arrests per 100,000 residents for assault, murder, and rape in each of the 50 US states in 1973.    
+Also given is the percent of the population living in urban areas.    
+```{r}
+X = USArrests
+```
+
+
+```{r}
+summary(X)
+```
+```{r}
+dim(X)
+```
+```{r}
+X[1:6,]
+```
+
+```{r}
+names(X)
+```
+
+```{r}
+require(graphics)
+pairs(X, panel = panel.smooth, main = "USArrests data")
+```
+
+```{r}
+state.names = row.names(X)
+print(state.names)
+```
+
+```{r}
+barplot(X$Murder, names.arg = state.names, las = 2, ylab = "Murder Rate per 100,000", 
+        main = "Murder Rate in the United States in 1973")
+```
+
+```{r}
+barplot(X$Assault, names.arg = state.names, las = 2, ylab = "Assault Rate per 100,000", 
+        main = "Assault Rate in the United States in 1973")
+```
+
+```{r}
+barplot(X$Rape, names.arg = state.names, las = 2, ylab = "Rape Rate per 100,000", 
+        main = "Rape Rate in the United States in 1973")
+```
+
+```{r}
+barplot(X$UrbanPop, names.arg = state.names, las = 2, ylab = "UrbanPop", 
+        main = "UrbanPop Percetage in the United States in 1973")
+```
+```{r}
+hist(X$Rape)
+```
+
+
+## Analysis
+### (a)
+```{r}
+data.dist=dist(X)
+hc.out = hclust(data.dist, method="complete")
+```
+
+```{r}
+plot(hc.out)
+```
+
+### (b)
+```{r}
+hc.out.clusters = cutree(hc.out, 3)
+```
+
+From the following table, you can see which states belong to which slusters.
+```{r}
+print(table(hc.out.clusters))
+table_inf = table(hc.out.clusters, state.names)
+print(table_inf)
+```
+
+### (c)
+```{r}
+sd.X = scale(X)
+data.dist=dist(sd.X)
+hc.sd.out = hclust(data.dist, method="complete")
+plot(hc.sd.out)
+```
+
+```{r}
+hc.sd.out.clusters = cutree(hc.sd.out, 3)
+```
+
+```{r}
+print(table(hc.sd.out.clusters))
+table_inf_sd = table(hc.sd.out.clusters, state.names)
+print(table_inf_sd)
+```
+
+### (d)
+```{r}
+table(hc.sd.out.clusters)
+```
+```{r}
+table(hc.out.clusters)
+```
+```{r}
+table(hc.out.clusters, hc.sd.out.clusters)
+```
+```{r}
+set.seed(2)
+km.out=kmeans(X, 3 , nstart=20)
+table(km.out$cluster)
+```
+
+```{r}
+plot(X, col=(km.out$cluster+1))
+```
+```{r}
+plot(X, col=(hc.out.clusters+1))
+```
+```{r}
+plot(X, col=(hc.sd.out.clusters+1))
+```
+```{r}
+print(summary(X))
+```
+[1] After scaling, Murder and Rape have greater effect on the hierarchical clustering. Assault and UrbanPop have less effect.    
+[2] We should not scale with the respect that Murder, Assault and Rape have same unit. But the UrbanPop have different unit compared to Muder, Assault and Rape.

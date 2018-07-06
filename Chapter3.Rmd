@@ -1,0 +1,53 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+Advertising = read.csv("./dataset/Advertising.csv", header = T, na.strings = "?")
+fix(Advertising)
+print(dim(Advertising))
+
+```
+
+```{r}
+Advertising[1:5,]
+```
+
+
+```{r}
+summary(Advertising)
+```
+
+```{r}
+m = dim(Advertising)[1]
+print(m)
+std.de = sd(Advertising[,'TV'])
+std.err = std.de/sqrt(m)
+print(std.de)
+print(std.err)
+print(names(Advertising))
+```
+
+```{r}
+lm.fit = lm(sales~TV, data=Advertising)
+lm.fit
+```
+
+```{r}
+summary(lm.fit)
+```
+for beta0 95% confidence interval
+```{r}
+print(7.032594+2*0.457843)
+print(7.032594-2*0.457843)
+```
+for beta1 95% confidence interval
+```{r}
+print(0.04754+2*0.002691)
+print(0.04754-2*0.002691)
+```
+
+
+

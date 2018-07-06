@@ -1,0 +1,244 @@
+
+R version 3.5.0 (2018-04-23) -- "Joy in Playing"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_COLLATE failed, using "C" 
+3: Setting LC_TIME failed, using "C" 
+4: Setting LC_MESSAGES failed, using "C" 
+5: Setting LC_MONETARY failed, using "C" 
+[R.app GUI 1.70 (7521) x86_64-apple-darwin15.6.0]
+
+WARNING: You're using a non-UTF8 locale, therefore only ASCII characters will work.
+Please read R for Mac OS X FAQ (see Help) section 9 and adjust your system preferences accordingly.
+[Workspace restored from /Users/wanguihong/.RData]
+[History restored from /Users/wanguihong/.Rapp.history]
+
+> 
+> 
+> set.seed(2)
+> x = matrix(rnorm(50*2),ncol=2)
+> x
+              [,1]         [,2]
+ [1,] -0.896914547 -0.838287148
+ [2,]  0.184849185  2.066301356
+ [3,]  1.587845331 -0.562247053
+ [4,] -1.130375674  1.275715512
+ [5,] -0.080251757 -1.047572627
+ [6,]  0.132420284 -1.965878241
+ [7,]  0.707954729 -0.322971094
+ [8,] -0.239698024  0.935862527
+ [9,]  1.984473937  1.139229803
+[10,] -0.138787012  1.671618767
+[11,]  0.417650751 -1.788242207
+[12,]  0.981752777  2.031242519
+[13,] -0.392695356 -0.703144333
+[14,] -1.039668977  0.158164763
+[15,]  1.782228960  0.506234797
+[16,] -2.311069085 -0.819995106
+[17,]  0.878604581 -1.998846995
+[18,]  0.035806718 -0.479292591
+[19,]  1.012828692  0.084179904
+[20,]  0.432265155 -0.895486611
+[21,]  2.090819205 -0.921275666
+[22,] -1.199925820  0.330449503
+[23,]  1.589638200 -0.141660809
+[24,]  1.954651642  0.434847762
+[25,]  0.004937777 -0.053722626
+[26,] -2.451706388 -0.907110376
+[27,]  0.477237303  1.303512232
+[28,] -0.596558169  0.771789776
+[29,]  0.792203270  1.052525595
+[30,]  0.289636710 -1.410038341
+[31,]  0.738938604  0.995984590
+[32,]  0.318960401 -1.695764903
+[33,]  1.076164354 -0.533372143
+[34,] -0.284157720 -1.372269451
+[35,] -0.776675274 -2.207919779
+[36,] -0.595660499  1.822122519
+[37,] -1.725979779 -0.653393411
+[38,] -0.902584480 -0.284681219
+[39,] -0.559061915 -0.386949604
+[40,] -0.246512567  0.386694975
+[41,] -0.383586228  1.600390852
+[42,] -1.959103175  1.681154956
+[43,] -0.841705060 -1.183606388
+[44,]  1.903547467 -1.358457254
+[45,]  0.622493930 -1.512670795
+[46,]  1.990920436 -1.253104899
+[47,] -0.305483725  1.959357077
+[48,] -0.090844235  0.007645872
+[49,] -0.184161452 -0.842615198
+[50,] -1.198767765 -0.601160105
+> x[1:25,1] = x[1:25,1]+3
+> x[1:25,2] = x[1:25,2]-4
+> x
+             [,1]         [,2]
+ [1,]  2.10308545 -4.838287148
+ [2,]  3.18484918 -1.933698644
+ [3,]  4.58784533 -4.562247053
+ [4,]  1.86962433 -2.724284488
+ [5,]  2.91974824 -5.047572627
+ [6,]  3.13242028 -5.965878241
+ [7,]  3.70795473 -4.322971094
+ [8,]  2.76030198 -3.064137473
+ [9,]  4.98447394 -2.860770197
+[10,]  2.86121299 -2.328381233
+[11,]  3.41765075 -5.788242207
+[12,]  3.98175278 -1.968757481
+[13,]  2.60730464 -4.703144333
+[14,]  1.96033102 -3.841835237
+[15,]  4.78222896 -3.493765203
+[16,]  0.68893092 -4.819995106
+[17,]  3.87860458 -5.998846995
+[18,]  3.03580672 -4.479292591
+[19,]  4.01282869 -3.915820096
+[20,]  3.43226515 -4.895486611
+[21,]  5.09081921 -4.921275666
+[22,]  1.80007418 -3.669550497
+[23,]  4.58963820 -4.141660809
+[24,]  4.95465164 -3.565152238
+[25,]  3.00493778 -4.053722626
+[26,] -2.45170639 -0.907110376
+[27,]  0.47723730  1.303512232
+[28,] -0.59655817  0.771789776
+[29,]  0.79220327  1.052525595
+[30,]  0.28963671 -1.410038341
+[31,]  0.73893860  0.995984590
+[32,]  0.31896040 -1.695764903
+[33,]  1.07616435 -0.533372143
+[34,] -0.28415772 -1.372269451
+[35,] -0.77667527 -2.207919779
+[36,] -0.59566050  1.822122519
+[37,] -1.72597978 -0.653393411
+[38,] -0.90258448 -0.284681219
+[39,] -0.55906191 -0.386949604
+[40,] -0.24651257  0.386694975
+[41,] -0.38358623  1.600390852
+[42,] -1.95910318  1.681154956
+[43,] -0.84170506 -1.183606388
+[44,]  1.90354747 -1.358457254
+[45,]  0.62249393 -1.512670795
+[46,]  1.99092044 -1.253104899
+[47,] -0.30548372  1.959357077
+[48,] -0.09084424  0.007645872
+[49,] -0.18416145 -0.842615198
+[50,] -1.19876777 -0.601160105
+> km.out=kmeans(x,2,nstart=20)
+> km.out
+K-means clustering with 2 clusters of sizes 25, 25
+
+Cluster means:
+        [,1]       [,2]
+1 -0.1956978 -0.1848774
+2  3.3339737 -4.0761910
+
+Clustering vector:
+ [1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+[50] 1
+
+Within cluster sum of squares by cluster:
+[1] 65.40068 63.20595
+ (between_SS / total_SS =  72.8 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss" "betweenss"   
+[7] "size"         "iter"         "ifault"      
+> ?kmean()
+Error in .helpForCall(topicExpr, parent.frame()) : 
+  no methods for 'kmean' and no documentation for it as a function
+> ?kmean
+No documentation for 'kmean' in specified packages and libraries:
+you could try '??kmean'
+> ??kmean
+starting httpd help server ... done
+> plot(x)
+> plot(x, col=(km.out$cluster+1))
+> km.out=kmeans(x,3,nstart=20)
+> set.seed(4)
+> km.out=kmeans(x,3,nstart=20)
+> plot(x, col=(km.out$cluster+1))
+> km.out$tot.withinss
+[1] 97.97927
+> km.out$tot. betweenss
+Error: unexpected symbol in "km.out$tot. betweenss"
+> km.out$tot.betweenss
+NULL
+> km.out$betweenss
+[1] 375.6386
+> km.out$withinss
+[1] 19.56137 52.67700 25.74089
+> hc.compte = hclust(dist(x), method="complete")
+> hc.average = hclust(dist(x), method="average")
+> hc.signle = hclust(dist(x), method="single")
+> par(mfrow=c(1,3))
+> plot(hc.compte, main="Complete Linkage")
+> plot(hc.compte, main="Complete Linkage", cex=0.9)
+> par(mfrow=c(1,3))
+> plot(hc.compte, main="Complete Linkage", cex=0.9)
+> plot(hc.average, main="Average Linkage", cex=0.9)
+> plot(hc.signle, main="Single Linkage", cex=0.9)
+> cutree(hc.compte, 2)
+ [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+[50] 2
+> hc_compte_cut = cutree(hc.compte, 2)
+> plot(x, col=(hc_compte_cut+1))
+> plot(x, col=(km.out$cluster+1))
+> km.out=kmeans(x,2,nstart=20)
+> plot(x, col=(km.out$cluster+1))
+> plot(x, col=(km.out$cluster+1))
+> plot(x, col=(hc_compte_cut+1))
+> par(mfrow=c(1,3))
+> plot(x, col=(km.out$cluster+1))
+> plot(x, col=(hc_compte_cut+1))
+> hc_average_cut = cutree(hc.average,2)
+> plot(x, col=(hc_average_cut +1))
+> hc_signle_cut=cutree(hc.signle, 2)
+> par(mfrow=c(1,4))
+> plot(x, col=(km.out$cluster+1))
+> plot(x, col=(hc_compte_cut+1))
+> plot(x, col=(hc_average_cut +1))
+> plot(x, col=(hc_signle_cut +1))
+> hc_signle_cut=cutree(hc.signle, 4)
+> par(mfrow=c(1,4))
+> plot(x, col=(km.out$cluster+1))
+> plot(x, col=(hc_compte_cut+1))
+> plot(x, col=(hc_average_cut +1))
+> hc_signle_cut=cutree(hc.signle, 4)
+> plot(x, col=(hc_signle_cut +1))
+> 
+> 
+> xsc = scale(x)
+> hc.compte = hclust(dist(x), method="complete")
+> plot(hc.compte)
+> hc.compte = hclust(dist(xsc), method="complete")
+>  plot(hc.compte)
+> par(mfrow=c(1,2))
+> hc.compte_sc = hclust(dist(xsc), method="complete")
+> hc.compte = hclust(dist(x), method="complete")
+> plot(hc.compte)
+> plot(hc.compte_sc)
+> ?t()
+> ?COR()
+Error in .helpForCall(topicExpr, parent.frame()) : 
+  no methods for 'COR' and no documentation for it as a function
+> ?cor()
+objc[81780]: Class FIFinderSyncExtensionHost is implemented in both /System/Library/PrivateFrameworks/FinderKit.framework/Versions/A/FinderKit (0x7fff98bc4b68) and /System/Library/PrivateFrameworks/FileProvider.framework/OverrideBundles/FinderSyncCollaborationFileProviderOverride.bundle/Contents/MacOS/FinderSyncCollaborationFileProviderOverride (0x10b572cd8). One of the two will be used. Which one is undefined.
+> 
