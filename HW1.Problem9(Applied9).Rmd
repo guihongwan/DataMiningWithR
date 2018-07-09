@@ -1,0 +1,96 @@
+---
+title: "HW1.Problem9(Applied9)"
+author: "Guihong Wan"
+date: "7/8/2018"
+output: html_document
+---
+
+## load data
+```{r}
+Auto = read.csv("./dataset/Auto.csv", header = T, na.strings = "?")
+print(dim(Auto))
+print(Auto[1:5,])
+```
+
+## (a)
+We only need to do (e) and (f) for homework1. Here, just for fun.
+
+```{r}
+plot(Auto)
+```
+
+## (b)
+
+```{r}
+?cor
+newAuto <- na.omit(Auto)
+cor(newAuto[,1:8])
+```
+## (c)
+```{r}
+lm.out=lm(mpg~.-name, data = newAuto)
+summary(lm.out)
+```
+## (d)
+
+```{r}
+par(mfrow=c(2,2))
+plot(lm.out)
+```
+## (e)
+What's the difference of ':' and '*'?
+
+```{r}
+lm.out1=lm(mpg~year:cylinders, data = newAuto)
+summary(lm.out1)
+```
+```{r}
+lm.out2=lm(mpg~year*cylinders, data = newAuto)
+summary(lm.out2)
+```
+```{r}
+lm.full.out=lm(mpg~.-name+cylinders*displacement+cylinders*horsepower+cylinders*weight+cylinders*acceleration+cylinders*year+cylinders*origin+displacement*horsepower+displacement*weight+displacement*acceleration+displacement*year+displacement*origin+horsepower*weight+horsepower:acceleration+horsepower:year+horsepower:origin+weight:acceleration+weight:year+origin+year:origin, data = newAuto)
+summary(lm.full.out)
+```
+```{r}
+lm.inter.out=lm(mpg~.-name+cylinders*displacement+horsepower:year, data = newAuto)
+summary(lm.inter.out)
+```
+
+```{r}
+anova(lm.out, lm.inter.out)
+```
+```{r}
+par(mfrow=c(2,2))
+plot(lm.inter.out)
+```
+
+lm.out vs lm.inter.out    
+1.According to Residual plot of lm.out, there exists non-linearity. By adding interaction terms. The Residual plot becomes more straight.    
+2.the Residual standard error of lm.inter.out decreases from 3.328 to 2.894    
+3.P value is very small, so the interaction terms are statistically significant.    
+4.When I tried to add a lot of interaction terms, the RSE becomes smaller.But it may overfit. In practice, we need to evaluate our model using appropriate methods, like cross validation.    
+
+
+## (f)
+```{r}
+lm.tran.out=lm(mpg~.-name+I(weight^2), data = newAuto)
+summary(lm.tran.out)
+```
+
+```{r}
+lm.tran.out=lm(mpg~.-name+I(sqrt(weight)), data = newAuto)
+summary(lm.tran.out)
+```
+```{r}
+lm.tran.out=lm(mpg~.-name+I(log(weight)), data = newAuto)
+summary(lm.tran.out)
+```
+```{r}
+lm.tran.out=lm(mpg~.-name+I(log(horsepower)), data = newAuto)
+summary(lm.tran.out)
+```
+1.After adding transformation terms, the Residual standard error becomes smaller and R-squared becomes bigger.    
+2.the effect of adding log,sqrt,^2 seems similar.    
+3.In practice, we need to have test data to evaluate which one extracts the patterns better.    
+

@@ -1,0 +1,120 @@
+---
+title: "Chapter3.HW1.Problem8(Exercises4)"
+author: "Guihong Wan"
+date: "7/8/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# (a) 
+I would expect that the training RSS of the cubic regression is smaller, since it may overfit the data.    
+
+# (b) 
+The test RSS of the linear regression is smaller. Linear regression may perform better, since the risk of overfitting of the cubic regression is higher.
+
+<mark>From the following experiment</mark>, my expection of (a) is mostly true, but my expection of (b) is not always true.
+This is because the cubic regression does not overfit.You can see different answer by setting set.seed(12) and set.seed(42).
+
+# experiment 
+
+## generate data
+```{r}
+generateLinearData = function(n, e=0.5){
+    #set.seed(42)
+    set.seed(12)
+    X_train = rnorm(n)
+    y_train = 3*X_train + rnorm(n, mean=0, sd=.7)
+    
+    n_test = n*e
+    X_test = rnorm(n_test)
+    y_test = 3*X_test + rnorm(n_test, mean=0, sd=.7)
+    return(list("X_train"=X_train, "y_train"=y_train, "X_test"=X_test, "y_test"=y_test))
+}
+
+```
+
+
+```{r}
+data = generateLinearData(100)
+X_train = data$X_train
+y_train = data$y_train
+X_test = data$X_test
+y_test = data$y_test
+
+X=X_train
+y=3*X_train
+
+plot(data$X_train, data$y_train, col='blue')
+points(data$X_test, data$y_test, col='red')
+abline(0,3)
+```
+
+
+```{r}
+lm.out=lm(y_train~X)
+summary(lm.out)
+```
+```{r}
+lm.out3=lm(y_train~poly(X,3))
+summary(lm.out3)
+```
+
+```{r}
+plot(lm.out)
+```
+
+
+```{r}
+plot(lm.out3)
+```
+
+
+```{r}
+lm.train.pred = predict(lm.out, data.frame(X=(c(X_train))), interval = "confidence")
+lm.train.pred3 = predict(lm.out3, data.frame(X=(c(X_train))), interval = "confidence")
+
+square_RS_train=(lm.train.pred[,1]-y_train)^2
+square_RS3_train=(lm.train.pred3[,1]-y_train)^2
+
+plot(X_train, y_train, col='black')
+points(X_train, lm.train.pred[,1], col='blue')
+points(X_train, lm.train.pred3[,1], col='red')
+abline(0,3)
+```
+
+```{r}
+lm.test.pred = predict(lm.out, data.frame(X=(c(X_test))), interval = "confidence")
+lm.test.pred3 = predict(lm.out3, data.frame(X=(c(X_test))), interval = "confidence")
+
+square_RS_test=(lm.test.pred[,1]-y_test)^2
+square_RS3_test=(lm.test.pred3[,1]-y_test)^2
+
+plot(X_test, y_test, col='black')
+points(X_test, lm.test.pred[,1], col='blue')
+points(X_test, lm.test.pred3[,1], col='red')
+abline(0,3)
+```
+
+```{r}
+anova(lm.out, lm.out3)
+```
+
+Train RSS
+```{r}
+print(sum(square_RS_train))
+print(sum(square_RS3_train))
+```
+test RSS
+```{r}
+print(sum(square_RS_test))
+print(sum(square_RS3_test))
+```
+
+# (c) 
+I would expect that the training RSS of the cubic regression is smaller, since it is able to fit the training data better.    
+
+# (d) 
+The test RSS of the cubic regression is smaller, since it is able to estimate the non-linear pattern better.

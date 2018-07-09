@@ -1,0 +1,94 @@
+---
+title: "HW1.problem10(Applied11)"
+author: "Guihong Wan"
+date: "7/8/2018"
+output: html_document
+---
+
+```{r}
+set.seed(1)
+x=rnorm(100)
+y=2*x+rnorm(100)
+
+```
+
+## (a)
+
+```{r}
+lm.no.out=lm(y~x+0)
+summary(lm.no.out)
+```
+1.The Estimate beta is 1.9939, which is very close to the true value 2.    
+2.Std. Error is 0.1065, which is reasonable, since it is close to the mean(rnorm(100))    
+3.t statistic is 18.73, which is big.   
+4. p value is almost 0. This means we can reject the null hypothesis.    
+
+```{r }
+?rnorm
+set.seed(1)
+print(mean(rnorm(100)))
+```
+
+## (b)
+
+```{r}
+lm.no.out2=lm(x~y+0)
+summary(lm.no.out2)
+```
+x = y/2-rnorm(100)/2
+1.The Estimate beta is 0.39111, which is relatively close to the true value 0.5.    
+2.Std. Error is 0.02089. The mean(rnorm(100)/2) is 0.05444368   
+3.t statistic is 18.73, which is big.   
+4. p value is almost 0. This means we can reject the null hypothesis. 
+
+```{r }
+set.seed(1)
+print(mean(rnorm(100)/2))
+```
+## (c)   
+
+1. for(a), the true function is y=2*x+rnorm(100)
+for(b), the true function is x = y/2-rnorm(100)/2
+2. t statistic is same.
+3. Both of p values are small, so we can reject the null hypothesis.
+
+## (d) numerically
+```{r }
+#for ß'/SE(ß')
+beta = 1.9939
+s1 = sum((y-x*beta)^2)
+s2 = sum((x^2))*99
+SE_beta = sqrt(s1/s2)
+t_statistic1 = beta/SE_beta
+
+print(t_statistic1) # should be 18.73
+```
+```{r }
+#for later formula
+s1 = sqrt(99)*sum(x*y)
+s2 = sqrt(sum(x^2)*sum(y^2) - (sum(x*y))^2)
+
+t_statistic2 = s1/s2
+
+print(t_statistic2) # should be 18.73
+```
+From ablove experiment, we are done.    
+
+### algebraically
+Please refere to handwritten part    
+
+##(e)    
+Claim:t-statistic for the regression of y onto x is the same as the t-statistic for the regression of x onto y   
+Argument: From the second formula, notice that the location of x and y are exchangable, but the value does not change.    
+
+##(f)
+```{r}
+lm.out=lm(y~x)
+summary(lm.out)
+```
+```{r}
+lm.out1=lm(x~y)
+summary(lm.out1)
+```
+From above experiment, t-statistic is 18.556 when lm(y~x); t-statistic is 18.56 when lm(x~y).    
+They are almost same.    

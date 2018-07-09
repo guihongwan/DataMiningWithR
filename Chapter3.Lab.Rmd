@@ -1,0 +1,136 @@
+---
+title: "Chapter3.Lab"
+author: "Guihong Wan"
+date: "7/8/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+MASS is a large collection of data set and functions, like Boston data set.
+Boston records medv(median house value) for 506 neighborhoods around Boston.
+
+```{r}
+library(MASS)
+```
+
+ISLR includes the data sets
+```{r}
+library(ISLR)
+```
+#Simple Linear Regression
+
+## explore the data
+```{r}
+names(Boston)
+```
+```{r}
+Boston[1:5,]
+```
+```{r}
+?Boston
+```
+## lstat vs medv
+
+lm(y~x,data)
+```{r}
+lm.fit = lm(medv~lstat, data=Boston)
+lm.fit
+```
+Summary gives us p-values and standard error, as well as the R2 statistic and F-statistic
+```{r}
+summary(lm.fit)
+```
+```{r}
+names(lm.fit)
+```
+coeffecients
+```{r}
+coef(lm.fit)
+```
+confidence interval
+```{r}
+confint(lm.fit)
+```
+predict() can be used to produce confidence intervals and prediction intervals for prediction of medv for a given value of lstat
+confidence interval
+```{r}
+predict(lm.fit, data.frame(lstat=(c(5,10,15))), interval="confidence")
+```
+prediction interval is substantially wider
+```{r}
+predict(lm.fit, data.frame(lstat=(c(5,10,15))), interval="prediction")
+```
+
+```{r}
+attach(Boston)
+plot(lstat, medv)
+abline(lm.fit)
+```
+more on abline()
+to draw a line with intercept a and slopeb, abline(a,b)
+```{r}
+plot(lstat, medv)
+abline(lm.fit, lwd=3, col="red")
+
+```
+```{r}
+plot(lstat, medv, pch=20)
+plot(lstat, medv, pch="+")
+plot(1:20, 1:20, pch=1:20)
+```
+## diagnostic plots
+par() tells R to split the display screen into separate panels
+```{r}
+par(mfrow=2,2)
+plot(lm.fit)
+```
+residuals() compute the residuals from a linear regression fit
+```{r}
+plot(predict(lm.fit), residuals(lm.fit))
+```
+rstudent() returns the studentized residuals
+```{r}
+plot(predict(lm.fit), rstudent(lm.fit))
+```
+Leverage statistics can be computed for any number of predictors using the hatvalues()
+```{r}
+plot(hatvalues(lm.fit))
+which.max(hatvalues(lm.fit))
+```
+# Multiple Linear Regression
+lm(y~x1+x2+x3)
+```{r}
+mlm.fit = lm(medv~lstat+age)
+summary(mlm.fit)
+```
+# Qualitative Predictor
+```{r}
+names(Carseats)
+```
+```{r}
+Carseats[1:5,]
+```
+```{r}
+dim(Carseats)
+```
+# Writing Functions
+```{r}
+loadLibraries = function(){
+  library(ISLR)
+  library(MASS)
+  print("The libraries are loaded.")
+}
+```
+
+```{r}
+loadLibraries()
+```
+
+
+
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
